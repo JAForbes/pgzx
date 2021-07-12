@@ -1,4 +1,5 @@
-// {$, fetch, ProcessOutput, argv}
+#!/usr/bin/env node
+
 import * as zx from 'zx'
 import * as M from 'module'
 import * as URL from 'url'
