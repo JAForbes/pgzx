@@ -82,7 +82,7 @@ function parseOptions(args){
             , 'sql-connect-timeout': connect_timeout
             , 'sql-prepare': prepare
             , no_prepare=!prepare
-            , 'sql-var': vars
+            , 'sql-var': vars=[]
             , ...rest2  
         } = rest
 
