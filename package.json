@@ -1,6 +1,6 @@
 {
   "name": "pgzx",
-  "version": "0.0.15-0",
+  "version": "0.0.15-alpha.0",
   "description": "zx + pg",
   "main": "index.js",
   "type": "module",
