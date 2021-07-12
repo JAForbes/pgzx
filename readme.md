@@ -53,7 +53,7 @@ If you do no want to connect to a database, you can pass the -X flag.
     | --ssl=require         Requires ssl
     | --ssl=reject          Reject unauthorized connections
     | --ssl=no-reject       Do not reject unauthorized connections
-    | --ssl=heroku          --no-ssl-reject if the host ends with a .com
+    | --ssl=heroku          --ssl-no-reject if the host ends with a .com
     
     For more detailed connection options, connect to postgres manually
     via -X
@@ -74,7 +74,7 @@ I've also recently been using zx more and more for operations scripts and findin
 
 Most of my scripts need to talk to the DB, and it was getting annoying manually specifying connection options in a way that would work locally and remotely at the top of every script.  In the spirit of ZX (including commonly used things as globals).  This package simply includes postgres.js by default and provides a few other postgres specific options (auto transations).
 
-I think pgfx could be the solid foundation for a basic migration system, and maybe that will come in a future package.
+I think pgfx could be a solid foundation for a basic migration system, and maybe that will come in a future package.
 
 ## Options
 
@@ -85,7 +85,7 @@ _Note the following is lifted almost verbatim from google/zx's documentation wit
 
 ### SSL
 
-A brief explanatation of the many SSL flags and options.  The short of it is, we would all really like to enforce ssl but many hosting providers do not support SSL connections out of the box.  So if you are on heroku for example, you may want to | --ssl=heroku          --no-ssl-reject if the host ends with a .com
+A brief explanation of the many SSL flags and options.  The short of it is, we would all really like to enforce ssl but many hosting providers do not support SSL connections out of the box.  So if you are on heroku for example, you may want to --ssl=heroku.  It uses --ssl if the host ends with a .com, otherwise ssl is disabled.
 
 At such a time when Heroku supports SSL, this flag will change behaviour to `--ssl`, so its a good default for heroku users.
 
