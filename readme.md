@@ -389,7 +389,7 @@ These features were ommited without prejudice.  They simply weren't available as
 
 All non referenced documentation and new code uses the [MIT Licence](https://opensource.org/licenses/MIT)
 
-All referenced code and language used in this documentation from google/zx uses the original licences Apache 2.0 Licence:
+All referenced code and language used in this documentation from google/zx uses the Apache 2.0 Licence:
 
 [google/zx - Apache Licence 2.0](https://github.com/google/zx/blob/main/LICENSE)
 
