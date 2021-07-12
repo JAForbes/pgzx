@@ -72,7 +72,7 @@ I've been writing migrations in psql (the shell scripting language offered by po
 
 I've also recently been using zx more and more for operations scripts and finding it to be a lot more reliable than other alternatives (and also it is pretty fun!).
 
-Most of my scripts need to talk to the DB, and it was getting annoying manually specifying connection options in a way that would work locally and remotely at the top of every script.  In the spirit of ZX (including commonly used things as globals).  This package simply includes postgres.js by default and provides a few other postgres specific options (auto transations).
+Most of my scripts need to talk to the DB, and it was getting annoying manually specifying connection options in a way that would work locally and remotely at the top of every script.  In the spirit of ZX (including commonly used things as globals).  This package simply includes postgres.js by default and provides a few other postgres specific options (auto transactions).
 
 I think pgfx could be a solid foundation for a basic migration system, and maybe that will come in a future package.
 
