@@ -10,7 +10,7 @@ _[google/zx](https://github.com/google/zx) with builtin support for [postgres.js
 
 ## Quick Start
 
-```
+```bash
 # Run a migration script with full access to zx and sql globals
 npx pgzx "$DATABASE_URL" migration.pg.js
 ```
