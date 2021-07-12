@@ -16,6 +16,9 @@
     "postgres": "^1.0.2",
     "zx": "^2.0.0"
   },
+  "keywords": [
+    "postgres", "ops", "scripting", "migration", "zx"
+  ],
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/eslint-parser": "^7.14.7",
