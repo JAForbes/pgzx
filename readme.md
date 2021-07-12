@@ -2,6 +2,12 @@
 
 _[google/zx](https://github.com/google/zx) with builtin support for [postgres.js](https://github.com/porsager/postgres)_
 
+## What
+
+- zx is a library that makes writing shell scripts in node.js _very nice_
+- postgres.js is a library that makes using postgres in node.js _very nice_
+- pgzx is a library that makes writing shell scripts that use postgres in node.js _very nice_
+
 ## Quick Start
 
 ```
@@ -62,6 +68,19 @@ Note: We also support standard environment variables like PGUSER, PGHOST, PGPASS
     via -X
 
 ```
+
+## Why
+
+I've been writing migrations in psql (the shell scripting language offered by postgres).  It gets you very far but at a certain point it is beneficial to have some higher level language constructs to do some basic checks and balances that migrations require.  
+
+I've also recently been using zx more and more for operations scripts and finding it to be a lot more reliable than other alternatives (and also it is pretty fun!).
+
+Most of my scripts need to talk to the DB, and it was getting annoying manually specifying connection options in a way that would work locally and remotely at the top of every script.  In the spirit of ZX (including commonly used things as globals).  This package simply includes postgres.js by default and provides a few other postgres specific options (auto transations).
+
+I think pgfx could be the solid foundation for a basic migration system, and maybe that will come in a future package.
+
+## Options
+
 
 _Note the following is lifted almost verbatim from google/zx's documentation with a few edits to adapt for usage with postgres, please checkout out google/zx repo for the latest documentation._
 
@@ -370,11 +389,9 @@ These features were ommited without prejudice.  They simply weren't available as
 
 All non referenced documentation and new code uses the [MIT Licence](https://opensource.org/licenses/MIT)
 
-All referenced code and documentation from google/zx and postgres.js use their original licences:
+All referenced code and language used in this documentation from google/zx uses the original licences Apache 2.0 Licence:
 
-- [porsager/postgres.js - Unlicense](https://github.com/porsager/postgres/blob/master/LICENSE)
-- [google/zx - Apache Licence 2.0](https://github.com/google/zx/blob/main/LICENSE)
-
+[google/zx - Apache Licence 2.0](https://github.com/google/zx/blob/main/LICENSE)
 
 ## Acknowledgements
 
