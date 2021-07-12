@@ -25,7 +25,8 @@ Usage: pgzx [CONNECTION] [PGOPTIONS] [ZXOPTIONS]
 
 [CONNECTION]
 
-Pass a postgres connection string (just like psql), you can instead specify host/user etc as flags, or omit it entirely and use the defaults
+- Pass a postgres connection string (just like psql)
+- AND/OR Specify host/user etc as env flags (PGHOST, PGUSER, PGPORT)
 
 [ZXOPTIONS]
 
