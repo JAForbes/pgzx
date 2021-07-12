@@ -28,45 +28,42 @@ console.log(chalk.green('Migration OK'))
 
 ```
 Usage: pgzx [CONNECTION] [PGOPTIONS] [ZXOPTIONS]
+Version: ${pkg.version}
 
 [CONNECTION]
 
 - Pass a postgres connection string (just like psql)
 - AND/OR Specify host/user etc as env flags (PGHOST, PGUSER, PGPORT)
 
-[ZXOPTIONS]
-
-Not all ZX functionality is supported.  We can add things on request.  But for now we're just
-importing the zx library and importing and executing the provided script ourselves.
-
---quiet                     Run zx commands quietly
---shell                     Override the shell used by $
---prefix                    Prefix shell commands with an other command
-
 [PGOPTIONS]
 
---begin                     Run entire script within a single transaction
+--begin                     Run entire script within a single transaction (default=false)
 
 Connection Options:
 
-Note: We also support standard environment variables like PGUSER, PGHOST, PGPASSWORD
+The only way to specify a connection is via a pg connection URL.  
 
--h, --host=HOST             Specify hostname (defaut 127.0.0.1)
--p, --port=PORT             Specify port (default 5432)
--U, --username=USERNAME     Specify username (default 'postgres')
+If you do no want to connect to a database, you can pass the -X flag.
+
 -X, --no-connect            Do not establish a connection automatically
 
 --ssl 
     | --ssl                 Enables ssl
-    | --ssl-prefer          Prefers ssl
-    | --ssl-require         Requires ssl
-    | --ssl-reject          Reject unauthorized connections
-    | --no-ssl-reject       Do not reject unauthorized connections
+    | --ssl=prefer          Prefers ssl
+    | --ssl=require         Requires ssl
+    | --ssl=reject          Reject unauthorized connections
+    | --ssl=no-reject       Do not reject unauthorized connections
     | --ssl=heroku          --no-ssl-reject if the host ends with a .com
     
     For more detailed connection options, connect to postgres manually
     via -X
 
+
+[ZXOPTIONS]
+
+--quiet                     Run zx commands quietly
+--shell                     Override the shell used by $
+--prefix                    Prefix shell commands with an other command
 ```
 
 ## Why

@@ -45,9 +45,6 @@ If you do no want to connect to a database, you can pass the -X flag.
 
 [ZXOPTIONS]
 
-Not all ZX functionality is supported.  We can add things on request.  But for now we're just
-importing the zx library and importing and executing the provided script ourselves.
-
 --quiet                     Run zx commands quietly
 --shell                     Override the shell used by $
 --prefix                    Prefix shell commands with an other command
