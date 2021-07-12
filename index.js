@@ -37,7 +37,7 @@ If you do no want to connect to a database, you can pass the -X flag.
     | --ssl=require         Requires ssl
     | --ssl=reject          Reject unauthorized connections
     | --ssl=no-reject       Do not reject unauthorized connections
-    | --ssl-heroku          --no-ssl-reject if the connection string has a .com in it
+    | --ssl=heroku          --no-ssl-reject if the host ends with a .com
     
     For more detailed connection options, connect to postgres manually
     via -X
@@ -71,11 +71,26 @@ function parseOptions(args){
     } = args
     
 
+    if ( theirSSL == 'heroku' ) {
+        let hosts = []
+        if (process.env.PGHOST) {
+            hosts = process.env.PGHOST.split(',')
+        } else if (connectionString ) {
+            hosts = 
+                connectionString.split('@')[1].split('/')[0].split(',').map( x => x.split(':')[0])
+        }
+
+        theirSSL =
+            hosts.every( x => x.endsWith('.com') ) 
+            ? 'no-reject'
+            : false
+    }
+
     const ssl = 
         theirSSL == 'no-reject'
-            ? { ssl: { rejectUnauthoried: false } }
+            ? { rejectUnauthorized: false }
         : theirSSL == 'reject'
-            ? { ssl: { rejectUnauthoried: true } }
+            ? { rejectUnauthorized: true }
         // inspired by: https://github.com/porsager/postgres/blob/master/lib/index.js#L577
         : theirSSL !== 'disabled' && theirSSL !== false && theirSSL
 
@@ -145,7 +160,7 @@ async function main(){
 main()
 .catch( 
     e => {
-        if (!$.verbose) {
+        if ($.verbose) {
             console.log('error', chalk.red(e))
         }
     }

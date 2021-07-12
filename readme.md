@@ -62,7 +62,7 @@ Note: We also support standard environment variables like PGUSER, PGHOST, PGPASS
     | --ssl-require         Requires ssl
     | --ssl-reject          Reject unauthorized connections
     | --no-ssl-reject       Do not reject unauthorized connections
-    | --ssl-heroku          --no-ssl-reject if the connection string has a .com in it
+    | --ssl=heroku          --no-ssl-reject if the host ends with a .com
     
     For more detailed connection options, connect to postgres manually
     via -X
@@ -88,7 +88,7 @@ _Note the following is lifted almost verbatim from google/zx's documentation wit
 
 ### SSL
 
-A brief explanatation of the many SSL flags and options.  The short of it is, we would all really like to enforce ssl but many hosting providers do not support SSL connections out of the box.  So if you are on heroku for example, you may want to use the special `--ssl-heroku` which sets ssl to `rejectUnauthorized: false` if the `PGHOST` is a `.com`.  When the host is an ip address, a local hostname, or `localhost` ssl will be disabled.
+A brief explanatation of the many SSL flags and options.  The short of it is, we would all really like to enforce ssl but many hosting providers do not support SSL connections out of the box.  So if you are on heroku for example, you may want to | --ssl=heroku          --no-ssl-reject if the host ends with a .com
 
 At such a time when Heroku supports SSL, this flag will change behaviour to `--ssl`, so its a good default for heroku users.
 
