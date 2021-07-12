@@ -85,7 +85,7 @@ _Note the following is lifted almost verbatim from google/zx's documentation wit
 
 ### SSL
 
-A brief explanation of the many SSL flags and options.  The short of it is, we would all really like to enforce ssl but many hosting providers do not support SSL connections out of the box.  So if you are on heroku for example, you may want to --ssl=heroku.  It uses --ssl if the host ends with a .com, otherwise ssl is disabled.
+A brief explanation of the many SSL flags and options.  The short of it is, we would all really like to enforce ssl but many hosting providers do not support SSL connections out of the box.  So if you are on heroku for example, you may want to `--ssl=heroku`.  It uses `--ssl` if the host ends with a `.com`, otherwise `ssl` is disabled.
 
 At such a time when Heroku supports SSL, this flag will change behaviour to `--ssl`, so its a good default for heroku users.
 
