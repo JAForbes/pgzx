@@ -28,7 +28,6 @@ console.log(chalk.green('Migration OK'))
 
 ```
 Usage: pgzx [CONNECTION] [PGOPTIONS] [ZXOPTIONS]
-Version: ${pkg.version}
 
 [CONNECTION]
 
@@ -41,7 +40,7 @@ Version: ${pkg.version}
 
 Connection Options:
 
-The only way to specify a connection is via a pg connection URL.  
+Specify a connection is via a pg connection URL.
 
 If you do no want to connect to a database, you can pass the -X flag.
 
@@ -53,11 +52,18 @@ If you do no want to connect to a database, you can pass the -X flag.
     | --ssl=require         Requires ssl
     | --ssl=reject          Reject unauthorized connections
     | --ssl=no-reject       Do not reject unauthorized connections
-    | --ssl=heroku          --ssl-no-reject if the host ends with a .com
+    | --ssl=heroku          --no-ssl-reject if the host ends with a .com
     
     For more detailed connection options, connect to postgres manually
     via -X
 
+Advanced:
+
+--sql-max                   Max number of connections (default:10)
+--sql-idle-timeout          Idle connection timeout in seconds (default:0)
+--sql-connect-timeout       Idle connection timeout in seconds (default:30)
+--sql-prepare               Automatic creation of prepared statements (default:false)
+--sql-var a=2 b="hello"     Specify a connection parameter
 
 [ZXOPTIONS]
 
@@ -72,7 +78,7 @@ I've been writing migrations in psql (the shell scripting language offered by po
 
 I've also recently been using zx more and more for operations scripts and finding it to be a lot more reliable than other alternatives (and also it is pretty fun!).
 
-Most of my scripts need to talk to the DB, and it was getting annoying manually specifying connection options in a way that would work locally and remotely at the top of every script.  In the spirit of ZX (including commonly used things as globals).  This package simply includes postgres.js by default and provides a few other postgres specific options (auto transactions).
+Most of my scripts need to talk to the DB, and it was getting annoying manually specifying connection options in a way that would work locally and remotely at the top of every script.  In the spirit of ZX (including commonly used things as globals).  This package simply includes postgres.js by default and provides a few other postgres specific options.
 
 I think pgfx could be a solid foundation for a basic migration system, and maybe that will come in a future package.
 
@@ -90,6 +96,14 @@ A brief explanation of the many SSL flags and options.  The short of it is, we w
 At such a time when Heroku supports SSL, this flag will change behaviour to `--ssl`, so its a good default for heroku users.
 
 For more information on SSL connection configuration in postgres checkout the [postgres.js SSL documentation](https://github.com/porsager/postgres#ssl).
+
+### --sql-prepare
+
+Those familiar with postgres.js will know that if a query is determined to be static, by default, a prepared statement is used.  In pgzx, prepared statements are disabled by default because its common to want to run multiple sql statements in a single template literal for migrations, and prepared statements do not support that.
+
+That is why in pgzx you need to explicitly enable prepared statements via `--sql-prepare`
+
+Note, there probably isn't a huge benefit in using prepared statements for shell scripts unless you plan to run the same query multiple times.  It is hugely beneficial in an actual application.
 
 ## Script Usage
 

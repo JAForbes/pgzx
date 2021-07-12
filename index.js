@@ -25,7 +25,7 @@ Version: ${pkg.version}
 
 Connection Options:
 
-The only way to specify a connection is via a pg connection URL.  
+Specify a connection via a pg connection URL.
 
 If you do no want to connect to a database, you can pass the -X flag.
 
@@ -42,6 +42,13 @@ If you do no want to connect to a database, you can pass the -X flag.
     For more detailed connection options, connect to postgres manually
     via -X
 
+Advanced:
+
+--sql-max                   Max number of connections (default:10)
+--sql-idle-timeout          Idle connection timeout in seconds (default:0)
+--sql-connect-timeout       Idle connection timeout in seconds (default:30)
+--sql-prepare               Automatic creation of prepared statements (default:false)
+--sql-var a=2 b="hello"     Specify a connection parameter
 
 [ZXOPTIONS]
 
@@ -66,8 +73,37 @@ function parseOptions(args){
         , begin=false
         , ...rest
     } = args
-    
 
+    let sqlOptions = {}
+    {
+        let { 
+            'sql-max':max
+            , 'sql-idle-timeout': idle_timeout
+            , 'sql-connect-timeout': connect_timeout
+            , 'sql-prepare': prepare
+            , no_prepare=!prepare
+            , 'sql-var': vars
+            , ...rest2  
+        } = rest
+
+        rest = rest2
+        
+        const connection = 
+            vars.reduce( (p,n) => {
+                const [k,v] = n.split('=')
+                try { p[k] = JSON.parse(v) } catch (e) { p[k] = v }
+                return p
+            }, {})
+
+        
+        for(let [k,v] of Object.entries({ max, idle_timeout, connect_timeout, no_prepare, connection })){
+            if ( typeof v !== 'undefined' ) {
+                sqlOptions[k] = v
+            }
+        }
+        
+    }
+    
     if ( theirSSL == 'heroku' ) {
         let hosts = []
         if (process.env.PGHOST) {
@@ -94,7 +130,7 @@ function parseOptions(args){
     const pg = 
         connect
         ? [
-            connectionString, { ssl }
+            connectionString, { ssl, ...sqlOptions }
         ]
         .filter(Boolean)
         : null
@@ -128,16 +164,18 @@ async function main(){
 
     let scriptPath;
 
-    if (options.script.startsWith('http://') || options.script.startsWith('https://')) {
-        scriptPath = options.script
-    } else {
-        
-        if (options.script.startsWith('/')) {
+    if (options.script) {
+        if (options.script.startsWith('http://') || options.script.startsWith('https://')) {
             scriptPath = options.script
-        } else if (options.script.startsWith('file:///')) {
-            scriptPath = URL.fileURLToPath(options.script)
         } else {
-            scriptPath = PATH.join(process.cwd(), options.script)
+            
+            if (options.script.startsWith('/')) {
+                scriptPath = options.script
+            } else if (options.script.startsWith('file:///')) {
+                scriptPath = URL.fileURLToPath(options.script)
+            } else {
+                scriptPath = PATH.join(process.cwd(), options.script)
+            }
         }
     }
 
@@ -158,7 +196,7 @@ main()
 .catch( 
     e => {
         if ($.verbose) {
-            console.log('error', chalk.red(e))
+            console.log('error', e)
         }
     }
 )
