@@ -109,8 +109,10 @@ const [user] = await sql`select * from users where user_id = ${1}`
 Inside a migration, you may not want to be notified when severity is 'notice'.  Because the sql instance is preconfigured for you we provide the ability to dynmaically bind sql.onnotice at runtime.
 
 ```js
-
-sql.onnotice = x => x.info != 'notice' && console.log(x)
+sql.onnotice = x => {
+    if(x.severity == 'NOTICE') return;
+    console.log(x)
+}
 sql`
 create extension if not exists pgcrypto;
 `
