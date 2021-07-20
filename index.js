@@ -91,10 +91,17 @@ function parseOptions(args){
         // inspired by: https://github.com/porsager/postgres/blob/master/lib/index.js#L577
         : theirSSL !== 'disabled' && theirSSL !== false && theirSSL
 
+    function onnotice(...args){
+        if( sql.onnotice ) {
+            sql.onnotice(...args)
+        } else {
+            console.log(...args)
+        }
+    }
     const pg = 
         connect
         ? [
-            connectionString, { ssl }
+            connectionString, { ssl, onnotice }
         ]
         .filter(Boolean)
         : null

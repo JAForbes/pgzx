@@ -101,6 +101,26 @@ Checkout [postgres.js' excellent documentation](https://github.com/porsager/post
 const [user] = await sql`select * from users where user_id = ${1}`
 ```
 
+
+### postgres.js extensions
+
+`sql.onnotice` can be assigned during a script to control server notices.
+
+Inside a migration, you may not want to be notified when severity is 'notice'.  Because the sql instance is preconfigured for you we provide the ability to dynmaically bind sql.onnotice at runtime.
+
+```js
+
+sql.onnotice = x => x.info != 'notice' && console.log(x)
+sql`
+create extension if not exists pgcrypto;
+`
+// later...
+//
+// revert to default (console.log)
+sql.onnotice = null
+```
+
+
 ### ``$`command` ``
 
 Executes a given string using the `spawn` function from the
